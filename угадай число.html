@@ -6,23 +6,92 @@
 
     <title>Угадай число</title>
     <style>
+        body {
+            background-image: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)), url(./1.jpg);
+        }
+
+        @font-face {
+            font-family: Big;
+            src: url(./ofont.ru_Toyz.ttf);
+        }
+
+        @font-face {
+            font-family: Mini;
+            src: url(./ofont.ru_Bad\ Comic.ttf);
+        }
+
         h1 {
+            font-family: Big;
+            color: #039be5;
             text-transform: uppercase;
             text-align: center;
-            margin-top: 10%;
+            font-size: 70px;
+            margin-top: 1%;
+            shadow: 0px 10px 40px rgb(0 0 0 / 35%);
+            text-shadow: 2px 2px 2px #000213, -1px -2px 0px #ffffff, 2px 2px 20px #000313;
         }
-h3 :last-child{
 
+        h2 {
+            font-family: Mini;
+        }
 
-}
+        :last-child {
+            text-align: center;
+        }
+
         #first_window,
         #second_window {
-            width: 500px;
+            width: 400px;
+            height: 170px;
             margin: 10% auto;
             text-align: center;
             padding: 20px;
-            border-radius: 20px;
-            background: cornsilk;
+            border-radius: 10px;
+            box-shadow: 10 10 10 black;
+            box-shadow: 0px 10px 40px rgb(0 0 0 / 35%);
+            background-color: rgb(255 255 255);
+        }
+
+        #first_window>button {
+            background: chartreuse;
+            width: 150px;
+            height: 50px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 2px #000213, 1px 1px 5px #000313;
+            font-family: big;
+            font-size: 30px;
+            color: white;
+
+        }
+
+        .flex>button {
+            background: chartreuse;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 2px #000213, 1px 1px 5px #000313;
+            font-family: big;
+            font-size: 25px;
+            color: white;
+
+        }
+
+        .flex {
+            display: inline-flex;
+        }
+
+        input {
+            width: 150px;
+            height: 42px;
+            border-radius: 10px;
+            margin-right: 20px;
+            border: solid greenyellow 3px;
+            font-family: Mini;
+            font-size: 30px;
+        }
+
+        #attempt {
+            color: red;
         }
     </style>
 </head>
@@ -48,23 +117,32 @@ h3 :last-child{
     <div id="first_window">
 
         <h2>Для начала игры нажмите кнопку</h2>
-        <button type="button" id="start">Начать игру</button>
+        <button type="button" id="start">играть</button>
     </div>
 
     <div id="second_window">
         <h2>Введите число от 0 до 100</h2>
-        <input type="text" id="input">
-        <button type="button" id="ok">Ok!</button>
+        <div class="flex">
+            <input type="text" id="#input">
+            <button type="button" id="ok">Ok</button>
+        </div>
+        <h2>Количество попыток:<b id="attempt"></b></h2>
     </div>
 
-    <h3 >Количество попыток:<b id="attempt"></b></h3>
+
 
 
 
     <script>
-        document.getElementById('second_window').style.display = "none"
 
-        let counter = 0;
+        document.getElementById('second_window').style.display = "none";
+
+        let counter;
+
+        let secret = Math.floor(Math.random() * 100 + 1);
+        console.log(secret);
+
+
         document.getElementById('start').onclick = function () {
             document.getElementById('first_window').style.display = "none";
             document.getElementById('second_window').style.display = "block";
@@ -75,16 +153,24 @@ h3 :last-child{
 
         document.getElementById('ok').onclick = function () {
             counter++;
-            if (counter>=10){
-                document.getElementById('first_window').style.display = "block";
-            document.getElementById('second_window').style.display = "none";
-            }else {
-                document.getElementById('attempt').innerHTML = counter;
-                alert(document.getElementById('input').value);
+            document.getElementById('attempt').innerHTML = counter;
+
+            let Answer = document.getElementById('#input').value
+            if (Answer === '') {
+                alert('Вы ничего не ввели');
+            } else if (isNaN(Answer)) {
+                alert(Answer + ' - это не число');
+            } else if (Answer == secret) {
+                alert('вы угадали');
+            } else if (+Answer < secret) {
+                alert('надо больше');
+            } else {
+                alert('Надо меньше');
             }
 
-
         }
+
+
 
 
     </script>
